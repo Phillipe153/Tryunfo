@@ -79,6 +79,7 @@ class Form extends React.Component {
             data-testid="trunfo-input"
             name="cardTrunfo"
             type="checkbox"
+            checked={ cardTrunfo }
             value={ cardTrunfo }
             onChange={ onInputChange }
           />
