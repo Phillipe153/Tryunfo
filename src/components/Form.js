@@ -23,6 +23,7 @@ class Form extends React.Component {
         <fieldset>
           <input
             data-testid="name-input"
+            name="cardName"
             type="text"
             value={ cardName }
             onChange={ onInputChange }
@@ -30,36 +31,42 @@ class Form extends React.Component {
           />
           <input
             data-testid="description-input"
+            name="cardDescription"
             type="textarea"
             value={ cardDescription }
             onChange={ onInputChange }
           />
           <input
             data-testid="attr1-input"
+            name="cardAttr1"
             type="number"
             value={ cardAttr1 }
             onChange={ onInputChange }
           />
           <input
             data-testid="attr2-input"
+            name="cardAttr2"
             type="number"
             value={ cardAttr2 }
             onChange={ onInputChange }
           />
           <input
             data-testid="attr3-input"
+            name="cardAttr3"
             type="number"
             value={ cardAttr3 }
             onChange={ onInputChange }
           />
           <input
             data-testid="image-input"
+            name="cardImage"
             type="text"
             value={ cardImage }
             onChange={ onInputChange }
           />
           <select
             data-testid="rare-input"
+            name="cardRare"
             type="select"
             value={ cardRare }
             onChange={ onInputChange }
@@ -70,8 +77,9 @@ class Form extends React.Component {
           </select>
           <input
             data-testid="trunfo-input"
+            name="cardTrunfo"
             type="checkbox"
-            checked={ cardTrunfo }
+            value={ cardTrunfo }
             onChange={ onInputChange }
           />
           <button

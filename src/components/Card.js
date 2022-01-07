@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Form extends React.Component {
+class Card extends React.Component {
   render() {
     const {
       cardName,
@@ -51,7 +51,7 @@ class Form extends React.Component {
   }
 }
 
-Form.propTypes = {
+Card.propTypes = {
   cardName: PropTypes.string.isRequired,
   cardDescription: PropTypes.string.isRequired,
   cardAttr1: PropTypes.string.isRequired,
@@ -62,4 +62,4 @@ Form.propTypes = {
   cardTrunfo: PropTypes.bool.isRequired,
 };
 
-export default Form;
+export default Card;
