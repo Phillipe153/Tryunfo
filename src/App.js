@@ -108,9 +108,9 @@ class App extends React.Component {
       isSaveButtonDisabled: true,
     }));
 
-    { cards.map(e => e.cardTrunfo)
-      ? this.setState({ hasTrunfo: true})
-      : this.setState({ hasTrunfo: false}) }
+    return cards.map((e) => e.cardTrunfo)
+      ? this.setState({ hasTrunfo: true })
+      : this.setState({ hasTrunfo: false });
   }
 
   render() {
