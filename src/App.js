@@ -23,11 +23,12 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.saveButtonDisabled = this.saveButtonDisabled.bind(this);
     this.saveButtonFunction = this.saveButtonFunction.bind(this);
+    this.deleteCard = this.deleteCard.bind(this);
+    this.hasTrunfoFucntion = this.hasTrunfoFucntion.bind(this);
   }
 
   handleChange(event) {
     const { name, value, type, checked } = event.target;
-    console.log(value);
     const checkValue = type === 'checkbox' ? checked : value;
     this.setState({ [name]: checkValue }, this.saveButtonDisabled);
   }
@@ -78,7 +79,7 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       isSaveButtonDisabled,
-      cards,
+      // cards,
     } = this.state;
 
     const newCard = {
@@ -106,11 +107,22 @@ class App extends React.Component {
       cardTrunfo: false,
       hasTrunfo: false,
       isSaveButtonDisabled: true,
-    }));
+    }), this.hasTrunfoFucntion);
+  }
 
-    return cards.map((e) => e.cardTrunfo)
-      ? this.setState({ hasTrunfo: true })
-      : this.setState({ hasTrunfo: false });
+  deleteCard(index) {
+    const { cards } = this.state;
+    cards.splice(index, 1);
+    this.setState({ cards }, this.hasTrunfoFucntion);
+  }
+
+  hasTrunfoFucntion() {
+    const { cards } = this.state;
+    if (cards.find((e) => e.cardTrunfo)) {
+      this.setState({ hasTrunfo: true });
+    } else {
+      this.setState({ hasTrunfo: false });
+    }
   }
 
   render() {
@@ -157,7 +169,7 @@ class App extends React.Component {
         />
         <div>
           Cartas no baralho:
-          { cards.map((e) => (
+          { cards.map((e, index) => (
             <fieldset key={ e.cardName }>
               <h4>{e.cardName}</h4>
               <h4>{e.cardDescription}</h4>
@@ -167,6 +179,13 @@ class App extends React.Component {
               <h4>{e.cardImage}</h4>
               <h4>{e.cardRare}</h4>
               <h4>{e.cardTrunfo ? 'Super Trunfo' : null }</h4>
+              <button
+                type="button"
+                data-testid="delete-button"
+                onClick={ () => this.deleteCard(index) }
+              >
+                Excluir
+              </button>
             </fieldset>
           ))}
         </div>
