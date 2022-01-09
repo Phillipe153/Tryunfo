@@ -7,25 +7,29 @@ class Filter extends React.Component {
 
     this.state = {
       filterName: '',
+      rareFilter: 'todas',
     };
 
     this.nameFilter = this.nameFilter.bind(this);
+    this.rareFilter = this.rareFilter.bind(this);
   }
 
   nameFilter(event) {
-    // const {
-    //   filterName,
-    // } = this.state;
-
     this.setState({ filterName: event.target.value });
+  }
+
+  rareFilter(event) {
+    this.setState({ rareFilter: event.target.value });
   }
 
   render() {
     const {
       filterName,
+      rareFilter,
     } = this.state;
     const {
       cards,
+      deleteCard,
     } = this.props;
 
     return (
@@ -38,9 +42,16 @@ class Filter extends React.Component {
             onChange={ this.nameFilter }
           />
           {/* <button>Buscar</button> */}
+          <select onChange={ this.rareFilter } data-testid="rare-filter">
+            <option>todas</option>
+            <option>normal</option>
+            <option>raro</option>
+            <option>muito raro</option>
+          </select>
         </fieldset>
         Cartas no baralho:
-        { cards.filter((x) => x.cardName.includes(filterName))
+        { cards.filter((card) => card.cardName.includes(filterName)
+        && (card.cardRare === rareFilter || rareFilter === 'todas'))
           .map((e, index) => (
             <fieldset key={ e.cardName }>
               <h4>{e.cardName}</h4>
@@ -54,7 +65,7 @@ class Filter extends React.Component {
               <button
                 type="button"
                 data-testid="delete-button"
-                onClick={ () => this.deleteCard(index) }
+                onClick={ () => deleteCard(index) }
               >
                 Excluir
               </button>
@@ -76,6 +87,7 @@ Filter.propTypes = {
   // cardRare: PropTypes.string.isRequired,
   // cardTrunfo: PropTypes.bool.isRequired,
   cards: PropTypes.arrayOf.isRequired,
+  deleteCard: PropTypes.func.isRequired,
 };
 
 export default Filter;
