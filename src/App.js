@@ -10,11 +10,11 @@ class App extends React.Component {
     this.state = {
       cardName: '',
       cardDescription: '',
-      cardAttr1: '',
-      cardAttr2: '',
-      cardAttr3: '',
+      cardAttr1: 0,
+      cardAttr2: 0,
+      cardAttr3: 0,
       cardImage: '',
-      cardRare: '',
+      cardRare: 'normal',
       cardTrunfo: false,
       hasTrunfo: false,
       isSaveButtonDisabled: true,
@@ -171,28 +171,9 @@ class App extends React.Component {
         <div>
           <Filter
             cards={ cards }
+            trunfoFilterProp={ hasTrunfo }
             deleteCard={ this.deleteCard }
           />
-          {/* Cartas no baralho:
-          { cards.map((e, index) => (
-            <fieldset key={ e.cardName }>
-              <h4>{e.cardName}</h4>
-              <h4>{e.cardDescription}</h4>
-              <h4>{e.cardAttr1}</h4>
-              <h4>{e.cardAttr2}</h4>
-              <h4>{e.cardAttr3}</h4>
-              <h4>{e.cardImage}</h4>
-              <h4>{e.cardRare}</h4>
-              <h4>{e.cardTrunfo ? 'Super Trunfo' : null }</h4>
-              <button
-                type="button"
-                data-testid="delete-button"
-                onClick={ () => this.deleteCard(index) }
-              >
-                Excluir
-              </button>
-            </fieldset>
-          ))} */}
         </div>
       </div>
     );

@@ -6,26 +6,34 @@ class Filter extends React.Component {
     super();
 
     this.state = {
-      filterName: '',
+      nameFilter: '',
       rareFilter: 'todas',
+      trunfoFilter: false,
+
     };
 
-    this.nameFilter = this.nameFilter.bind(this);
-    this.rareFilter = this.rareFilter.bind(this);
+    this.nameFilterFunction = this.nameFilterFunction.bind(this);
+    this.rareFilterFunction = this.rareFilterFunction.bind(this);
+    this.trunfoFilterFunction = this.trunfoFilterFunction.bind(this);
   }
 
-  nameFilter(event) {
-    this.setState({ filterName: event.target.value });
+  nameFilterFunction(event) {
+    this.setState({ nameFilter: event.target.value });
   }
 
-  rareFilter(event) {
+  rareFilterFunction(event) {
     this.setState({ rareFilter: event.target.value });
+  }
+
+  trunfoFilterFunction(event) {
+    this.setState({ trunfoFilter: event.target.checked });
   }
 
   render() {
     const {
-      filterName,
+      nameFilter,
       rareFilter,
+      trunfoFilter,
     } = this.state;
     const {
       cards,
@@ -39,38 +47,73 @@ class Filter extends React.Component {
           <input
             type="text"
             data-testid="name-filter"
-            onChange={ this.nameFilter }
+            onChange={ this.nameFilterFunction }
+            disabled={ trunfoFilter }
           />
-          {/* <button>Buscar</button> */}
-          <select onChange={ this.rareFilter } data-testid="rare-filter">
+          <select
+            onChange={ this.rareFilterFunction }
+            data-testid="rare-filter"
+            disabled={ trunfoFilter }
+          >
             <option>todas</option>
             <option>normal</option>
             <option>raro</option>
             <option>muito raro</option>
           </select>
+          <label
+            htmlFor="trunfo-filter"
+            data-testid="trunfo-filter"
+          >
+            <input
+              onChange={ this.trunfoFilterFunction }
+              type="checkbox"
+            />
+            Super Trybe Trunfo
+          </label>
         </fieldset>
         Cartas no baralho:
-        { cards.filter((card) => card.cardName.includes(filterName)
-        && (card.cardRare === rareFilter || rareFilter === 'todas'))
-          .map((e, index) => (
-            <fieldset key={ e.cardName }>
-              <h4>{e.cardName}</h4>
-              <h4>{e.cardDescription}</h4>
-              <h4>{e.cardAttr1}</h4>
-              <h4>{e.cardAttr2}</h4>
-              <h4>{e.cardAttr3}</h4>
-              <h4>{e.cardImage}</h4>
-              <h4>{e.cardRare}</h4>
-              <h4>{e.cardTrunfo ? 'Super Trunfo' : null }</h4>
-              <button
-                type="button"
-                data-testid="delete-button"
-                onClick={ () => deleteCard(index) }
-              >
-                Excluir
-              </button>
-            </fieldset>
-          ))}
+        { trunfoFilter
+          ? cards.filter((card) => card.cardTrunfo === true)
+            .map((card, index) => (
+              <fieldset key={ card.cardName }>
+                <h4>{card.cardName}</h4>
+                <h4>{card.cardDescription}</h4>
+                <h4>{card.cardAttr1}</h4>
+                <h4>{card.cardAttr2}</h4>
+                <h4>{card.cardAttr3}</h4>
+                <h4>{card.cardImage}</h4>
+                <h4>{card.cardRare}</h4>
+                <h4>{card.cardTrunfo ? 'Super Trunfo' : null }</h4>
+                <button
+                  type="button"
+                  data-testid="delete-button"
+                  onClick={ () => deleteCard(index) }
+                >
+                  Excluir
+                </button>
+              </fieldset>
+            ))
+          : cards.filter((card) => card.cardName.includes(nameFilter)
+          && (card.cardRare === rareFilter || rareFilter === 'todas'))
+            .map((allCards, index) => (
+              <fieldset key={ allCards.cardName }>
+                <h4>{allCards.cardName}</h4>
+                <h4>{allCards.cardDescription}</h4>
+                <h4>{allCards.cardAttr1}</h4>
+                <h4>{allCards.cardAttr2}</h4>
+                <h4>{allCards.cardAttr3}</h4>
+                <h4>{allCards.cardImage}</h4>
+                <h4>{allCards.cardRare}</h4>
+                <h4>{allCards.cardTrunfo ? 'Super Trunfo' : null }</h4>
+                <button
+                  type="button"
+                  data-testid="delete-button"
+                  onClick={ () => deleteCard(index) }
+                >
+                  Excluir
+                </button>
+              </fieldset>
+            ))}
       </div>
 
     );
@@ -78,14 +121,6 @@ class Filter extends React.Component {
 }
 
 Filter.propTypes = {
-  // cardName: PropTypes.string.isRequired,
-  // cardDescription: PropTypes.string.isRequired,
-  // cardAttr1: PropTypes.string.isRequired,
-  // cardAttr2: PropTypes.string.isRequired,
-  // cardAttr3: PropTypes.string.isRequired,
-  // cardImage: PropTypes.string.isRequired,
-  // cardRare: PropTypes.string.isRequired,
-  // cardTrunfo: PropTypes.bool.isRequired,
   cards: PropTypes.arrayOf.isRequired,
   deleteCard: PropTypes.func.isRequired,
 };
