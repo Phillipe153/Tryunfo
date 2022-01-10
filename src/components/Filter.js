@@ -12,21 +12,13 @@ class Filter extends React.Component {
 
     };
 
-    this.nameFilterFunction = this.nameFilterFunction.bind(this);
-    this.rareFilterFunction = this.rareFilterFunction.bind(this);
-    this.trunfoFilterFunction = this.trunfoFilterFunction.bind(this);
+    this.filterFunction = this.filterFunction.bind(this);
   }
 
-  nameFilterFunction(event) {
-    this.setState({ nameFilter: event.target.value });
-  }
-
-  rareFilterFunction(event) {
-    this.setState({ rareFilter: event.target.value });
-  }
-
-  trunfoFilterFunction(event) {
-    this.setState({ trunfoFilter: event.target.checked });
+  filterFunction({ target }) {
+    const { value, name, checked, type } = target;
+    const checkValue = type === 'checkbox' ? checked : value;
+    this.setState({ [name]: checkValue });
   }
 
   render() {
@@ -46,12 +38,14 @@ class Filter extends React.Component {
           Filtros de busca
           <input
             type="text"
+            name="nameFilter"
             data-testid="name-filter"
-            onChange={ this.nameFilterFunction }
+            onChange={ this.filterFunction }
             disabled={ trunfoFilter }
           />
           <select
-            onChange={ this.rareFilterFunction }
+            name="rareFilter"
+            onChange={ this.filterFunction }
             data-testid="rare-filter"
             disabled={ trunfoFilter }
           >
@@ -65,7 +59,10 @@ class Filter extends React.Component {
             data-testid="trunfo-filter"
           >
             <input
-              onChange={ this.trunfoFilterFunction }
+              id="trunfo-filter"
+              // data-testid="trunfo-filter"
+              name="trunfoFilter"
+              onChange={ this.filterFunction }
               type="checkbox"
             />
             Super Trybe Trunfo
